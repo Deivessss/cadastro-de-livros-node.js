@@ -26,20 +26,12 @@ com uso de API EXPRESS e integração ao banco de dados MySQL.
 
 ### 📌Instruções para realizar testes usando o Insomnia:
 
-- Cadastrar novo livro:
+#### ° Cadastrar novo livro:
 
-
-
-  **Método**: POST
-
-
-  **Rota**:
-  http://localhost:3000/livros
-
-
-
-  **Body**: enviar um JSON com as informações 
-  do livro:
+ - **Método**: POST  
+ - **Rota**: http://localhost:3000/livros  
+ - **Body**: enviar um JSON com as informações 
+   do livro:
   ```
   {
   "nome": "Nome do livro"
@@ -47,43 +39,19 @@ com uso de API EXPRESS e integração ao banco de dados MySQL.
   "editora": "Editora do livro"
   }
   ```
-
-
-
-- Consultar todos os livros cadastrados:
-
-
-
-  **Método**: GET
-
-
-  **Rota**: http://localhost:3000/livros
-
-
-
-- Consultar livro por ID:
-
-
-
-  **Método**: GET
-
-
-  **Rota**: Colocar o ID como parâmetro na rota/url: localhost:3000/livros/[id]
-
-
-
-  Exemplo, se for id 99: http://localhost:3000/livros/99
-
-
-
-- Remover/excluir livro:
-
-
-
-  **Método**: DELETE
-
-
-  **Rota**: Colocar o ID como parâmetro na rota/url: localhost:3000/livros/[id]
+##  
+#### ° Consultar todos os livros cadastrados:
+ - **Método**: GET  
+ - **Rota**: http://localhost:3000/livros
+##  
+#### ° Consultar livro por ID:
+ - **Método**: GET  
+ - **Rota**: Colocar o ID como parâmetro na rota/url: localhost:3000/livros/[id]  
+  Exemplo, se for id 99: http://localhost:3000/livros/99  
+##  
+#### ° Remover/excluir livro:
+ - **Método**: DELETE  
+ - **Rota**: Colocar o ID como parâmetro na rota/url: localhost:3000/livros/[id]  
 
 ---
 
