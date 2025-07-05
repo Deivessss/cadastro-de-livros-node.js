@@ -57,5 +57,5 @@ com uso de API EXPRESS e integração ao banco de dados MySQL.
 
 ### 📌Instruções para ativar o banco de dados:
 
-  - Utilizar o arquivo database.sql que já está com os comandos prontos,
+  - Utilizar o arquivo `database.sql` que já está com os comandos prontos,
    para criar o banco de dados + tabela chamada livros, onde os dados ficarão armazenados.
