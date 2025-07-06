@@ -18,22 +18,18 @@ app.post('/livros', (req, res) => {
     if (!nome || !autor || !editora) {
         res.status(400).json({erro: "Todos os campos são obrigatórios: nome, autor e editora."})
     } else {
-        const query = 'INSERT INTO livros (nome, autor, editora) VALUES (?, ?, ?)'
+        const query = "INSERT INTO livros VALUES (?, ?, ?)"
         conexao.query(query, [nome, autor, editora], (erro, resultados) => {
             if (erro) {
                 console.error({erro: erro})
-                return res.status(500).json({erro: "Erro ao cadastrar o livro no banco de dados."})
+                return res.status(500).json({erro: "Erro interno do servidor."})
             } else {
-                const novoLivro = {
-                    id: resultados.insertId,
-                    nome: nome,
-                    autor: autor,
-                    editora: editora
-                }
-                res.status(201).json(novoLivro)
+                const novoLivro = {id: resultados.insertId, nome: nome, autor: autor, editora: editora}
+                return res.status(200).json(novoLivro)
             }
         })
     }
+    
 })
 
 /* Consultar todos os livros: */
@@ -41,25 +37,39 @@ app.get('/livros', (req, res) => {
     conexao.query("SELECT * FROM LIVROS", [], (erro, resultados) => {
         if (erro) {
             console.error({erro: erro})
-            res.status(500).json({erro: "Não foi possível consultar os livros."})
+            return res.status(500).json({erro: "Não foi possível consultar os livros."})
         } else {
-            res.status(200).json(resultados)
+            return res.status(200).json(resultados)
         }
     })
 })
 
 /* Consultar livro por ID: */
-app.get('/livros/:id', (req, res) =>{
-    const query = "SELECT * FROM LIVROS WHERE id = ?"
-    conexao.query(query, [req.params.id], (erro, resultados) => {
+app.get('/livros/:id', (req, res) => {
+    conexao.query("SELECT * FROM livros WHERE ID = ?", [req.params.id], (erro, resultados) => {
         if (erro) {
             console.error({erro: erro})
-            return res.status(500).json({erro: "Erro ao consultar o livro."})
+            return res.status(500).json({erro: "Erro interno do servidor."})
+        } 
+        if (resultados.lenght === 0) {
+            return res.status(404).json({erro: "Nenhum livro encontrado com esse ID."})
+        } else {
+            return res.status(200).json(resultados[0])
+        }
+    })
+})
+
+/* Consultar livro por Autor: */
+app.get('/livros/autor/:autor', (req, res) => {
+    conexao.query("SELECT * FROM livros WHERE autor = ?", [req.params.autor], (erro, resultados) => {
+        if (erro) {
+            console.error({erro: erro})
+            return res.status(500).json({erro: "Erro interno do servidor."})
         }
         if (resultados.length === 0) {
-            return res.status(404).json({erro: "ID não encontrado."})
+            return res.status(404).json({erro: "Nenhum livro encontrado com esse autor."})
         } else {
-            res.status(200).json(resultados[0])
+            return res.status(200).json(resultados)
         }
     })
 })
