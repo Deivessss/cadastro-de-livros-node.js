@@ -89,6 +89,26 @@ app.delete('/livros/:id', (req, res) => {
     })
 })
 
+/* Atualizar livros por ID: */
+app.put('/livros/:id', (req, res) => {
+    const {nome, autor, editora} = req.body
+    if (!nome || !autor || !editora) {
+        return res.status(400).json({erro: "Todos os campos são obrigatórios: nome, autor e editora."})
+    }
+    const query = "UPDATE livros SET nome = ?, autor = ?, editora = ? WHERE id = ?"
+    conexao.query(query, [nome, autor, editora, req.params.id], (erro, resultados) => {
+        if(erro) {
+            console.error({erro: erro})
+            return res.status(500).json({erro: "Erro interno do servidor."})
+        }
+        if (resultados.affectedRows === 0) {
+            return res.status(404).json({erro: "Nenhum livro encontrado com esse ID."})
+        }
+        const novoLivro = {id: req.params.id, nome: nome, autor: autor, editora: editora}
+        return res.status(200).json({sucesso: `Livro de ID ${req.params.id} atualizado com sucesso.`, novoLivro: novoLivro})
+    })
+})
+
 /* Comando que inicia o servidor: */
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}/`)
