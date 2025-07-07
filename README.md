@@ -19,8 +19,15 @@ com uso de API EXPRESS e integração ao banco de dados MySQL.
 
 - Cadastrar novo livro
 - Consultar todos os livros cadastrados
+- Consultar por autor
 - Consultar por ID
+- Atualizar por ID
 - Remover livro
+
+---
+
+#### 📌 Antes de utilizar:
+- No terminal, use o comando `npm install`, para instalar todas as bibliotecas/pacotes/frameworks necessários. O NPM (Node Package Manager) já saberá quais pacotes instalar, devido ao arquivo `package.json`.
 
 ---
 
