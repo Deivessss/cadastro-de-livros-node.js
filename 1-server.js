@@ -18,7 +18,7 @@ app.post('/livros', (req, res) => {
     if (!nome || !autor || !editora) {
         res.status(400).json({erro: "Todos os campos são obrigatórios: nome, autor e editora."})
     } else {
-        const query = "INSERT INTO livros VALUES (?, ?, ?)"
+        const query = "INSERT INTO livros VALUES (DEFAULT, ?, ?, ?)"
         conexao.query(query, [nome, autor, editora], (erro, resultados) => {
             if (erro) {
                 console.error({erro: erro})
@@ -51,7 +51,7 @@ app.get('/livros/:id', (req, res) => {
             console.error({erro: erro})
             return res.status(500).json({erro: "Erro interno do servidor."})
         } 
-        if (resultados.lenght === 0) {
+        if (resultados.length === 0) {
             return res.status(404).json({erro: "Nenhum livro encontrado com esse ID."})
         } else {
             return res.status(200).json(resultados[0])
