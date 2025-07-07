@@ -41,8 +41,8 @@ com uso de API EXPRESS e integração ao banco de dados MySQL.
    do livro:
   ```
   {
-  "nome": "Nome do livro"
-  "autor": "Autor do livro"
+  "nome": "Nome do livro",
+  "autor": "Autor do livro",
   "editora": "Editora do livro"
   }
   ```
@@ -51,11 +51,30 @@ com uso de API EXPRESS e integração ao banco de dados MySQL.
  - **Método**: GET  
  - **Rota**: http://localhost:3000/livros
 ##  
+#### ° Consultar livro por autor:
+- **Método**: GET  
+- **Rota**: Colocar o AUTOR como parâmetro na rota/url: localhost:3000/livros/autor/[autor]  
+  Exemplo, se for autor Charles Dickens: http://localhost:3000/livros/autor/Charles%20Dickens
+  (substituir espaços por %20)
+##
 #### ° Consultar livro por ID:
  - **Método**: GET  
  - **Rota**: Colocar o ID como parâmetro na rota/url: localhost:3000/livros/[id]  
   Exemplo, se for id 99: http://localhost:3000/livros/99  
 ##  
+#### ° Atualizar livro por ID: 
+- **Método**: PUT
+- **Rota**: Colocar o ID como parâmetro na rota/url: localhost:3000/livros/[id]  
+  Exemplo, se for id 99: http://localhost:3000/livros/99  
+- **Body**: Enviar um JSON com as informações NOVAS do livro:
+```
+{
+"nome": "Novo nome",
+"autor": "Novo autor",
+"editora": "Nova editora"
+}
+```
+##
 #### ° Remover/excluir livro:
  - **Método**: DELETE  
  - **Rota**: Colocar o ID como parâmetro na rota/url: localhost:3000/livros/[id]  
