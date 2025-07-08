@@ -2,18 +2,17 @@ const express = require('express')
 const conexao = require('./2-database')
 const app = express()
 const port = 3000
-const livros = []
 
 /* Permite que o server receba JSON pelo req.body: */
 app.use(express.json())
 
 /* Página inicial da API: */
-app.get('/', (req, res) => {
-    res.send('API Cadastro de Livros')
+app.get("/", (req, res) => {
+    res.send("API Cadastro de Livros")
 })
 
 /* Cadastrar novo livro: */
-app.post('/livros', (req, res) => {
+app.post("/livros", (req, res) => {
     const {nome, autor, editora} = req.body
     if (!nome || !autor || !editora) {
         res.status(400).json({erro: "Todos os campos são obrigatórios: nome, autor e editora."})
@@ -25,7 +24,7 @@ app.post('/livros', (req, res) => {
                 return res.status(500).json({erro: "Erro interno do servidor."})
             } else {
                 const novoLivro = {id: resultados.insertId, nome: nome, autor: autor, editora: editora}
-                return res.status(200).json(novoLivro)
+                return res.status(201).json(novoLivro)
             }
         })
     }
@@ -33,7 +32,7 @@ app.post('/livros', (req, res) => {
 })
 
 /* Consultar todos os livros: */
-app.get('/livros', (req, res) => {
+app.get("/livros", (req, res) => {
     conexao.query("SELECT * FROM LIVROS", [], (erro, resultados) => {
         if (erro) {
             console.error({erro: erro})
@@ -44,23 +43,8 @@ app.get('/livros', (req, res) => {
     })
 })
 
-/* Consultar livro por ID: */
-app.get('/livros/:id', (req, res) => {
-    conexao.query("SELECT * FROM livros WHERE ID = ?", [req.params.id], (erro, resultados) => {
-        if (erro) {
-            console.error({erro: erro})
-            return res.status(500).json({erro: "Erro interno do servidor."})
-        } 
-        if (resultados.length === 0) {
-            return res.status(404).json({erro: "Nenhum livro encontrado com esse ID."})
-        } else {
-            return res.status(200).json(resultados[0])
-        }
-    })
-})
-
 /* Consultar livro por Autor: */
-app.get('/livros/autor/:autor', (req, res) => {
+app.get("/livros/autor/:autor", (req, res) => {
     conexao.query("SELECT * FROM livros WHERE autor = ?", [req.params.autor], (erro, resultados) => {
         if (erro) {
             console.error({erro: erro})
@@ -74,8 +58,23 @@ app.get('/livros/autor/:autor', (req, res) => {
     })
 })
 
+/* Consultar livro por ID: */
+app.get("/livros/:id", (req, res) => {
+    conexao.query("SELECT * FROM livros WHERE ID = ?", [req.params.id], (erro, resultados) => {
+        if (erro) {
+            console.error({erro: erro})
+            return res.status(500).json({erro: "Erro interno do servidor."})
+        } 
+        if (resultados.length === 0) {
+            return res.status(404).json({erro: "Nenhum livro encontrado com esse ID."})
+        } else {
+            return res.status(200).json(resultados[0])
+        }
+    })
+})
+
 /* Deletar livro por ID: */
-app.delete('/livros/:id', (req, res) => {
+app.delete("/livros/:id", (req, res) => {
     const query = "DELETE FROM livros WHERE id = ?"
     conexao.query(query, [req.params.id], (erro, resultados) => {
         if (erro) {
@@ -90,7 +89,7 @@ app.delete('/livros/:id', (req, res) => {
 })
 
 /* Atualizar livros por ID: */
-app.put('/livros/:id', (req, res) => {
+app.put("/livros/:id", (req, res) => {
     const {nome, autor, editora} = req.body
     if (!nome || !autor || !editora) {
         return res.status(400).json({erro: "Todos os campos são obrigatórios: nome, autor e editora."})
